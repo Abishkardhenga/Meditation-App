@@ -12,6 +12,7 @@ import AppGradient from "@/components/AppGradient"
 import { StatusBar } from "expo-status-bar"
 import { MEDITATION_DATA } from "@/constants/meditation-data"
 import meditationImage from "@/constants/meditation-image"
+import { LinearGradient } from "expo-linear-gradient"
 
 const NatureMeditate = () => {
   return (
@@ -28,7 +29,7 @@ const NatureMeditate = () => {
             <FlatList
               className="mb-20"
               data={MEDITATION_DATA}
-              keyExtractor={(item) => item.id.toString}
+              keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
                 <Pressable
@@ -40,7 +41,14 @@ const NatureMeditate = () => {
                     resizeMode="cover"
                     className="flex-1 rounded-lg justify-center "
                   >
-                    <Text>{item.title}</Text>
+                    <LinearGradient
+                      colors={["transparent", "rgba(0, 0, 0, 0.8)"]}
+                      className="flex-1 justify-center items-center "
+                    >
+                      <Text className="text-gray-100 text-3xl text-center font-bold ">
+                        {item.title}
+                      </Text>
+                    </LinearGradient>
                   </ImageBackground>
                 </Pressable>
               )}
