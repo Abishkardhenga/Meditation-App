@@ -10,8 +10,11 @@ import { LinearGradient } from "expo-linear-gradient"
 import { StatusBar } from "expo-status-bar"
 import React from "react"
 import CustomButton from "@/components/CustomButton"
+import { useRouter } from "expo-router"
+import AppGradient from "@/components/AppGradient"
 
 const App = () => {
+  const router = useRouter()
   return (
     <View className="flex-1 ">
       <StatusBar hidden style="light" />
@@ -21,11 +24,8 @@ const App = () => {
         resizeMode="cover"
         className="flex-1"
       >
-        <LinearGradient
-          className="flex-1"
-          colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.8)"]}
-        >
-          <SafeAreaView className="flex-1 mx-5 my-12 px-1 justify-between">
+        <AppGradient colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.8)"]}>
+          <SafeAreaView className="flex-1 px-1 justify-between">
             <View>
               <Text className="text-center text-white font-bold text-4xl">
                 Simple Meditation
@@ -37,11 +37,11 @@ const App = () => {
             <View>
               <CustomButton
                 title="Get Started"
-                onPress={() => console.log("onPress button dubaye")}
+                onPress={() => router.push("/(tabs)/nature-meditate")}
               />
             </View>
           </SafeAreaView>
-        </LinearGradient>
+        </AppGradient>
       </ImageBackground>
     </View>
   )
