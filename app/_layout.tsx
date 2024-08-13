@@ -7,7 +7,7 @@ SplashScreen.preventAutoHideAsync()
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
-    RobotoMono: require("@/assets/fonts/RobotoMono-Regular.ttf"),
+    "Roboto-mono": require("@/assets/fonts/RobotoMono-Regular.ttf"),
   })
   useEffect(() => {
     if (error) throw error
