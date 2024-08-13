@@ -13,6 +13,7 @@ import { StatusBar } from "expo-status-bar"
 import { MEDITATION_DATA } from "@/constants/meditation-data"
 import meditationImage from "@/constants/meditation-image"
 import { LinearGradient } from "expo-linear-gradient"
+import { router } from "expo-router"
 
 const NatureMeditate = () => {
   return (
@@ -34,7 +35,7 @@ const NatureMeditate = () => {
               renderItem={({ item }) => (
                 <Pressable
                   className="h-48 rounded-md overflow-hidden my-3"
-                  onPress={() => console.log("ok")}
+                  onPress={() => router.push(`/meditate/${item.id}`)}
                 >
                   <ImageBackground
                     source={meditationImage[item.id - 1]}
