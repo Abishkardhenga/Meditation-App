@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native"
 import React, { useEffect } from "react"
 import { SplashScreen, Stack } from "expo-router"
 import { useFonts } from "expo-font"
+import TimerContextProvider from "@/context/TimerContext"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -18,11 +19,17 @@ const RootLayout = () => {
   if (!fontsLoaded) return null
   if (!fontsLoaded && !error) return null
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="meditate/[id]" options={{ headerShown: false }} />
-    </Stack>
+    <TimerContextProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="meditate/[id]" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(modal)/adjust-meditation-duration"
+          options={{ headerShown: false, presentation: "modal" }}
+        />
+      </Stack>
+    </TimerContextProvider>
   )
 }
 
