@@ -11,13 +11,18 @@ const Affirmation = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text className="text-3xl font-bold text-zinc-50">Affirmation</Text>
           <View>
-            {AFFIRMATION_GALLERY.map((item) => (
-              <GuidedAffirmationGallery
-                key={item.title}
-                title={item.title}
-                previews={item.data}
-              />
-            ))}
+            {AFFIRMATION_GALLERY.map((item, index) => {
+              console.log("this is item", item.title)
+              console.log("this is data", item.data)
+
+              return (
+                <GuidedAffirmationGallery
+                  key={index}
+                  title={item.title}
+                  previews={item.data}
+                />
+              )
+            })}
           </View>
         </ScrollView>
       </AppGradient>

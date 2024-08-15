@@ -20,16 +20,19 @@ const AffirmationPractice = () => {
   useEffect(() => {
     for (let i = 0; i < AFFIRMATION_GALLERY.length; i++) {
       const affirmationData = AFFIRMATION_GALLERY[i].data
-      if (affirmationData) {
-        const data = affirmationData.find((item) => item.id == Number(itemId))
-        if (affirmationData) setAffirmation(data)
-        const textArray = data!.text.split(".")
-        if (textArray![textArray!.length - 1] === " ") {
-          textArray.pop()
-        }
-        setSentences(textArray)
-        return
+      const data = affirmationData.find((item) => {
+        console.log("this is item id ", item.id, itemId)
+        return item.id == Number(itemId)
+      })
+      if (data) setAffirmation(data)
+      console.log("data", data)
+      const textArray = data!.text!.split(".")
+      if (textArray![textArray!.length - 1] === " ") {
+        textArray.pop()
       }
+      console.log("this is text array", textArray)
+      setSentences(textArray)
+      return
     }
   }, [])
   return (
@@ -49,7 +52,7 @@ const AffirmationPractice = () => {
           <ScrollView className="mt-20" showsVerticalScrollIndicator={false}>
             <View className="h-full justify-center">
               <View className="h-4/5">
-                {sentences.map((sentence, id) => (
+                {sentences.map((sentence, key) => (
                   <Text className="text-white text-3xl mb-12 font-bold text-center">
                     {sentence}.
                   </Text>
