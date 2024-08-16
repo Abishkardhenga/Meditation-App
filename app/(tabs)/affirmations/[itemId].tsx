@@ -13,27 +13,31 @@ import AppGradient from "@/components/AppGradient"
 import AntDesign from "@expo/vector-icons/AntDesign"
 
 const AffirmationPractice = () => {
-  const [affirmation, setAffirmation] = useState<GalleryPreviewData>()
+  const [affirmation, setAffirmation] = useState<GalleryPreviewData | null>(
+    null
+  )
   const [sentences, setSentences] = useState<string[]>([])
   const { itemId } = useLocalSearchParams()
+
   useEffect(() => {
     for (let i = 0; i < AFFIRMATION_GALLERY.length; i++) {
       const affirmationData = AFFIRMATION_GALLERY[i].data
-      const data = affirmationData.find((item) => {
-        console.log("this is item id ", item.id, itemId)
-        return item.id == Number(itemId)
-      })
-      if (data) setAffirmation(data)
-      console.log("data", data)
-      const textArray = data!.text!.split(".")
-      if (textArray![textArray!.length - 1] === " ") {
-        textArray.pop()
+      const data = affirmationData.find((item) => item.id == Number(itemId))
+
+      if (data) {
+        setAffirmation(data)
+
+        const textArray = data.text ? data.text.split(".") : []
+        if (textArray[textArray.length - 1] === " ") {
+          textArray.pop()
+        }
+
+        setSentences(textArray)
+        break
       }
-      console.log("this is text array", textArray)
-      setSentences(textArray)
-      return
     }
-  }, [])
+  }, [itemId])
+
   return (
     <View className="flex-1">
       <ImageBackground
@@ -52,7 +56,10 @@ const AffirmationPractice = () => {
             <View className="h-full justify-center">
               <View className="h-4/5">
                 {sentences.map((sentence, key) => (
-                  <Text className="text-white text-3xl mb-12 font-bold text-center">
+                  <Text
+                    key={key}
+                    className="text-white text-3xl mb-12 font-bold text-center"
+                  >
                     {sentence}.
                   </Text>
                 ))}

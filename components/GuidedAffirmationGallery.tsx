@@ -9,6 +9,7 @@ import {
 import React from "react"
 import { GalleryPreviewData } from "@/constants/models/affirmationCategory"
 import { Link } from "expo-router"
+import uuid from "react-native-uuid"
 
 type GuidedAffirmationGalleryProps = {
   title: string
@@ -28,7 +29,7 @@ const GuidedAffirmationGallery = ({
         <FlatList
           showsHorizontalScrollIndicator={false}
           data={previews}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => String(uuid.v4())}
           renderItem={({ item }) => {
             return (
               <Link href={`/affirmations/${item.id}`} asChild>
