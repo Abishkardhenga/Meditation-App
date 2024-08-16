@@ -2,7 +2,6 @@ import {
   ImageBackground,
   Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   View,
 } from "react-native"
@@ -67,5 +66,3 @@ const AffirmationPractice = () => {
 }
 
 export default AffirmationPractice
-
-const styles = StyleSheet.create({})

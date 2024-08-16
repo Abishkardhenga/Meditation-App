@@ -19,15 +19,23 @@ const Meditate = () => {
   const { id } = useLocalSearchParams()
 
   const { duration: secondRemaining, setDuration } = useContext(TimerContext)
-  // const [secondRemaining, setSecondRemaining] = useState(10)
   const [isMeditating, setMeditating] = useState(false)
   const [audioPlaying, setAudioPlaying] = useState(false)
-  const [audioSound, setSound] = useState<Audio.Sound>()
+  const [audioSound, setSound] = useState<Audio.Sound | null>(null)
+
+  useEffect(() => {
+    const initializeAndPlaySound = async () => {
+      await initializeSound()
+    }
+
+    initializeAndPlaySound()
+  }, [])
 
   useEffect(() => {
     let timerId: any
     if (secondRemaining === 0) {
       setMeditating(false)
+      stopSound()
       return
     }
     if (isMeditating) {
@@ -48,7 +56,7 @@ const Meditate = () => {
 
   const toggleMeditationSessionStatus = async () => {
     if (secondRemaining === 0) setDuration(10)
-    setMeditating(true)
+    setMeditating(!isMeditating)
     await toggleSound()
   }
 
@@ -61,24 +69,32 @@ const Meditate = () => {
 
   const initializeSound = async () => {
     const soundFile = MEDITATION_DATA[Number(id) - 1].audio
-    console.log("soundfuile ", soundFile)
+    console.log("soundFile", soundFile)
     const { sound } = await Audio.Sound.createAsync(AUDIO_FILES[soundFile])
     console.log("audio files", AUDIO_FILES[soundFile])
     setSound(sound)
-    return sound
+  }
+
+  const playSound = async (sound: Audio.Sound) => {
+    const status = await sound.getStatusAsync()
+    if (status.isLoaded) {
+      await sound.playAsync()
+      setAudioPlaying(true)
+    }
+  }
+
+  const stopSound = async () => {
+    if (audioPlaying && audioSound) {
+      await audioSound.pauseAsync()
+      setAudioPlaying(false)
+    }
   }
 
   const toggleSound = async () => {
-    const sound = audioSound ? audioSound : await initializeSound()
-
-    const status = await sound?.getStatusAsync()
-
-    if (status?.isLoaded && !audioPlaying) {
-      await sound?.playAsync()
-      setAudioPlaying(true)
+    if (audioPlaying) {
+      await stopSound()
     } else {
-      await sound?.pauseAsync()
-      setAudioPlaying(false)
+      await playSound(audioSound!)
     }
   }
 

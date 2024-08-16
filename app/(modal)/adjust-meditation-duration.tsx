@@ -58,5 +58,3 @@ const AdjustMeditationDuration = () => {
 }
 
 export default AdjustMeditationDuration
-
-const styles = StyleSheet.create({})
